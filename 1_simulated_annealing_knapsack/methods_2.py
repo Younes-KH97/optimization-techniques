@@ -60,22 +60,28 @@ def get_corrected_solution(L, weights, profits, capicity_maximun):
         if not is_solution(L_correc, weights, profits, capicity_maximun): continue
         return L_correc
 
-    
-
 #F5
-def get_next_solution(L, weights,weights_solution, profits, profits_solution,capicity_maximun, first_solution):
-    print("first solution is: "+str(first_solution))
-    flag = False
-    for i in range(len(L)):
-        if L[i] == 1: continue
-        if(weights[i]+sum(weights_solution) < capicity_maximun): 
-            flag = True
-            return f"new solution is {str(first_solution+profits[i])}"
-        
+def get_next_solution(L, weights, profits, capacity_maximum):
+    r = random.randint(0, 14)
+    L_1 = L
+    while True:
+        if L_1[r] == 1:
+            L_1[r] = 0
+            return L_1
+        else:
+            L_1[r] = 1
+            flag = is_solution(L_1, weights, profits, capacity_maximum)
+            if flag == True:
+                return L_1
+            else:
+                L_correc = get_corrected_solution(L_1, weights, profits, capacity_maximum)
+                if(L_correc == L_1): continue
+                return L_correc
+            
 
-    if flag == False:
-        return f"The first solution {first_solution} is optimum"
 
+
+    
 
 
     
